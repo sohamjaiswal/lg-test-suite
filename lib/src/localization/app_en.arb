@@ -1,0 +1,6 @@
+{
+  "appTitle": "lg_tester",
+  "@appTitle": {
+    "description": "The title of the application"
+  }
+}
