@@ -107,14 +107,8 @@ class LgHome extends StatelessWidget {
                         try {
                           await lgController.dispatchQuery(
                             context,
-                            'flytoview=${KmlHelper.lookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, 0)}',
+                            'flytoview=${KmlHelper.orbitLookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, 0)}',
                           );
-                          for (double i = 0; i <= 180; i += 17) {
-                            await lgController.dispatchQuery(context,
-                                'flytoview=${KmlHelper.orbitLookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, i)}');
-                            await Future.delayed(
-                                const Duration(milliseconds: 1000));
-                          }
                         } catch (e) {
                           ScaffoldMessenger.of(context).showSnackBar(
                             const SnackBar(
@@ -125,6 +119,25 @@ class LgHome extends StatelessWidget {
                       }
                     : null,
                 child: const Text("Show Dev (Soham) Location"),
+              ),
+              ElevatedButton(
+                onPressed: (sshController.client != null)
+                    ? () async {
+                        try {
+                          for (double i = 0; i <= 180; i += 17) {
+                            await lgController.dispatchQuery(context,
+                                'flytoview=${KmlHelper.lookAtLinear(30.733366, 76.779768, ConstantValues.tourZoomScale * 50, 0, i)}');
+                          }
+                        } catch (e) {
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              content: Text('Failed to dispatch KML query'),
+                            ),
+                          );
+                        }
+                      }
+                    : null,
+                child: const Text("Orbit Dev (Soham) Location"),
               ),
               ElevatedButton(
                 onPressed: (sshController.client != null)
